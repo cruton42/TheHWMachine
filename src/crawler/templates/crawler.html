@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crawler Results</title>
+</head>
+<body>
+    <h1>Crawler Results</h1>
+    <ul>
+        {% for title in titles %}
+            <li>{{ title }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for link in links %}
+            <li><a href="{{ link }}">{{ link }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
