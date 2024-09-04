@@ -5,5 +5,6 @@ from crawler import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('crawl/', views.crawl_view, name='crawl'),
+    path('jobcrawl/', views.jobcrawl_view, name='jobcrawl'),
     path('', views.home),
 ]
