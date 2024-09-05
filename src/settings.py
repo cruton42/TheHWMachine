@@ -47,5 +47,16 @@ TEMPLATES = [
     },
 ]
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'HWMDbase',
+        'USER': 'cocob',
+        'PASSWORD': 'Catsisdogs6!',
+        'HOST': 'localhost',  # Or the IP address of your database server
+        'PORT': '5432',       # Default port for PostgreSQL
+    }
+}
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
