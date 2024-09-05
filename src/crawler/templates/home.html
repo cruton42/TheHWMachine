@@ -4,8 +4,14 @@
     <title>Home Page</title>
 </head>
 <body>
-    <h1>Welcome to the Home Page!</h1>
+    <h1>Welcome to The HomeWork Machine!</h1>
+    <p><a href="{% url 'login' %}">Go to Login Page</a></p>
     <p><a href="{% url 'crawl' %}">Go to Crawler Page</a></p>
     <p><a href="{% url 'jobcrawl' %}">Go to JobCrawler Page</a></p>
+    <p><a href="{% url 'upload_pdf' %}">Go to Upload PDF Page</a></p>
+    <form action="{% url 'logout' %}" method="get">
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+    </form>
 </body>
 </html>

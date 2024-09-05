@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Job(models.Model):
     url = models.URLField()
@@ -15,3 +16,7 @@ class twJob(models.Model):
 
     def __str__(self):
         return self.header
+
+class UserPDF(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    pdf = models.FileField(upload_to='user_pdfs/', null=True, blank=True)
