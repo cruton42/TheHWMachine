@@ -19,4 +19,9 @@ class twJob(models.Model):
 
 class UserPDF(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    pdf = models.FileField(upload_to='user_pdfs/', null=True, blank=True)
+    pdf_file = models.FileField(upload_to='user_pdfs/', null=True, blank=True)
+
+class Resume(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    pdf_file = models.FileField(upload_to='resumes/')
+    text_content = models.TextField(blank=True, null=True)  # Store extracted text from the PDF

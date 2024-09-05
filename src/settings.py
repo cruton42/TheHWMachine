@@ -1,3 +1,4 @@
+from decouple import config
 import os
 from pathlib import Path
 
@@ -63,6 +64,12 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 
 LOGOUT_REDIRECT_URL = 'logout'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+OPENAI_API_KEY = config('OPENAI_API_KEY')

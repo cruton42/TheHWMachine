@@ -8,14 +8,24 @@ from selenium.webdriver.support import expected_conditions as EC
 from .models import Job
 import requests
 from bs4 import BeautifulSoup
+from selenium.common.exceptions import TimeoutException
 
-def JobCrawler():
+def JobCrawler(job_title):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     service = Service('/opt/homebrew/bin/chromedriver')  # Update with the path to your chromedriver
 
+    # Construct the URL with the user-defined job title
+    job_title_encoded = job_title.replace(" ", "+")
+    url = f"https://www.remoterocketship.com/?page=1&sort=DateAdded&locations=United+States&seniority=entry-level%2Cjunior&jobTitle={job_title_encoded}"
+    
+    if is_url_active(url):
+        print("The URL is active.")
+    else:
+        print("The URL is not active.")
+
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    driver.get("https://www.remoterocketship.com/?page=1&sort=DateAdded&locations=United+States&seniority=entry-level%2Cjunior&jobTitle=Software+Engineer")  # Update with the target URL
+    driver.get(url)  # Use the dynamically constructed URL
 
     job_links = []
     try:
@@ -35,6 +45,8 @@ def JobCrawler():
                 job.header = extract_header_from_link(href)  # Assuming you've defined this function
                 job.description = extract_description_from_link(href)  # Assuming you've defined this function
                 job.save()
+    except TimeoutException:
+        job_links = []  # Return an empty list if a timeout occurs
 
     finally:
         driver.quit()
@@ -63,3 +75,15 @@ def extract_description_from_link(link):
     description = "\n".join(p.get_text(strip=True) for p in paragraphs)
     
     return description if description else 'No description found'
+
+def is_url_active(url):
+    try:
+        response = requests.get(url)
+        # Check if the status code indicates that the URL is active
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+    except requests.RequestException as e:
+        print(f"Error checking URL: {e}")
+        return False

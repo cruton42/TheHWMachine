@@ -1,8 +1,8 @@
-<!-- templates/upload_pdf.html -->
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload PDF</title>
 </head>
 <body>
@@ -12,5 +12,10 @@
         {{ form.as_p }}
         <button type="submit">Upload</button>
     </form>
+    {% if existing_pdf %}
+        <p>Uploaded PDF: <a href="{{ existing_pdf.pdf_file.url }}" target="_blank">View PDF</a></p>
+    {% else %}
+        <p>No PDF has been uploaded yet.</p>
+    {% endif %}
 </body>
 </html>

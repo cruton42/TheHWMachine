@@ -9,7 +9,7 @@
     <p><a href="{% url 'crawl' %}">Go to Crawler Page</a></p>
     <p><a href="{% url 'jobcrawl' %}">Go to JobCrawler Page</a></p>
     <p><a href="{% url 'upload_pdf' %}">Go to Upload PDF Page</a></p>
-    <form action="{% url 'logout' %}" method="get">
+    <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <button type="submit">Log out</button>
     </form>
