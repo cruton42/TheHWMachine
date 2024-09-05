@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from .crawler import Crawler
-from .sw_jobcrawler import JobCrawler
+from .sw_jobcrawler import JobCrawler, extract_header_from_link, extract_description_from_link
 from django.http import HttpResponse
-import requests
-from bs4 import BeautifulSoup
 from .models import Job
 
 
@@ -40,44 +38,19 @@ def jobcrawl_view(request):
         header = extract_header_from_link(link)
         description = extract_description_from_link(link)
         
-        # Save job to the database
-        Job.objects.get_or_create(url=link, defaults={'header': header, 'description': description})
+        # Use get_or_create to avoid duplicates
+        job, created = Job.objects.get_or_create(url=link, defaults={'header': header, 'description': description})
         
-        # Append job details to the list
+        # Only append to job_details if the job was newly created or already exists
         job_details.append({
-            'header': header,
-            'link': link,
-            'description': description
+            'header': job.header,  # Use job.header from the database
+            'link': job.url,
+            'description': job.description
         })
 
-    # Generate HTML for displaying job details
-    html_content = ""
-    for job in job_details:
-        html_content += f'<h1 class="job-header">{job["header"]}</h1>'
-        html_content += f'<a href="{job["link"]}" target="_blank">{job["link"]}</a><br>'
-        html_content += f'<p class="job-description">{job["description"]}</p><br>'
+        for job in job_details:
+            print(f"Job Header: {job['header']}, Job URL: {job['link']}")
 
-    return HttpResponse(html_content)
+    # Pass the job details to the template for rendering
+    return render(request, 'jobcrawler.html', {'jobs': job_details})
 
-def extract_header_from_link(link):
-    response = requests.get(link)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    
-    # Find the <h1> tag with the specific class
-    header_tag = soup.find('h1', class_='text-3xl font-semibold text-primary')
-    
-    # Extract the text content
-    header = header_tag.get_text(strip=True) if header_tag else 'No header found'
-    
-    return header
-
-def extract_description_from_link(link):
-    response = requests.get(link)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    
-    # Find all <p> tags with the specific class
-    paragraphs = soup.find_all('p', class_='text-secondary whitespace-pre-line')
-    # Combine all text content into a single string
-    description = "\n".join(p.get_text(strip=True) for p in paragraphs)
-    
-    return description if description else 'No description found'

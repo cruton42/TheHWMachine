@@ -1,14 +1,24 @@
+<!-- src/crawler/templates/jobcrawl.html -->
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Remote Jobs</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <h1>Remote Technical Writing Jobs</h1>
-    <ul>
-        {% for link in job_links %}
-            <li><a href="{{ link }}" target="_blank">Apply Here</a></li>
-        {% endfor %}
-    </ul>
+  <div class="header">
+    <h1>Job Listings</h1>
+  </div>
+  {% for job in jobs %}
+  <div class="job-listing">
+    <h2 class="job-header">{{ job.header }}</h2>
+    <p class="job-description">{{ job.description }}</p>
+    <p class="job-link">{{ job.link|safe }}</p>
+  </div>
+  {% endfor %}
 </body>
 </html>

@@ -6,9 +6,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .models import Job
-
-def clear_existing_jobs():
-    Job.objects.all().delete()
+import requests
+from bs4 import BeautifulSoup
 
 def JobCrawler():
     chrome_options = Options()
@@ -17,8 +16,6 @@ def JobCrawler():
 
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get("https://www.remoterocketship.com/?page=1&sort=DateAdded&jobTitle=Software+Engineer&seniority=entry-level&locations=United+States")  # Update with the target URL
-
-    clear_existing_jobs()
 
     job_links = []
     try:
@@ -30,8 +27,39 @@ def JobCrawler():
             href = job_element.get_attribute('href')
             job_links.append(href)
 
+            # Check if the job URL already exists in the database before creating
+            job, created = Job.objects.get_or_create(url=href)
+
+            # If a new job was created, populate the header and description
+            if created:
+                job.header = extract_header_from_link(href)  # Assuming you've defined this function
+                job.description = extract_description_from_link(href)  # Assuming you've defined this function
+                job.save()
+
     finally:
         driver.quit()
 
     return job_links
 
+def extract_header_from_link(link):
+    response = requests.get(link)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    # Find the <h1> tag with the specific class
+    header_tag = soup.find('h1', class_='text-3xl font-semibold text-primary')
+    
+    # Extract the text content
+    header = header_tag.get_text(strip=True) if header_tag else 'No header found'
+    
+    return header
+
+def extract_description_from_link(link):
+    response = requests.get(link)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    
+    # Find all <p> tags with the specific class
+    paragraphs = soup.find_all('p', class_='text-secondary whitespace-pre-line')
+    # Combine all text content into a single string
+    description = "\n".join(p.get_text(strip=True) for p in paragraphs)
+    
+    return description if description else 'No description found'
