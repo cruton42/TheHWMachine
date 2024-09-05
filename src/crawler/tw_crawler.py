@@ -5,17 +5,17 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from .models import Job
+from .models import twJob
 import requests
 from bs4 import BeautifulSoup
 
-def JobCrawler():
+def twJobCrawler():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     service = Service('/opt/homebrew/bin/chromedriver')  # Update with the path to your chromedriver
 
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    driver.get("https://www.remoterocketship.com/?page=1&sort=DateAdded&locations=United+States&seniority=entry-level%2Cjunior&jobTitle=Software+Engineer")  # Update with the target URL
+    driver.get("https://www.remoterocketship.com/?page=1&sort=DateAdded&jobTitle=Technical+Writer&locations=United+States&seniority=entry-level%2Cjunior")  # Update with the target URL
 
     job_links = []
     try:
@@ -28,12 +28,12 @@ def JobCrawler():
             job_links.append(href)
 
             # Check if the job URL already exists in the database before creating
-            job, created = Job.objects.get_or_create(url=href)
+            job, created = twJob.objects.get_or_create(url=href)
 
             # If a new job was created, populate the header and description
             if created:
-                job.header = extract_header_from_link(href)  # Assuming you've defined this function
-                job.description = extract_description_from_link(href)  # Assuming you've defined this function
+                job.header = twextract_header_from_link(href)  # Assuming you've defined this function
+                job.description = twextract_description_from_link(href)  # Assuming you've defined this function
                 job.save()
 
     finally:
@@ -41,7 +41,7 @@ def JobCrawler():
 
     return job_links
 
-def extract_header_from_link(link):
+def twextract_header_from_link(link):
     response = requests.get(link)
     soup = BeautifulSoup(response.content, 'html.parser')
     
@@ -53,7 +53,7 @@ def extract_header_from_link(link):
     
     return header
 
-def extract_description_from_link(link):
+def twextract_description_from_link(link):
     response = requests.get(link)
     soup = BeautifulSoup(response.content, 'html.parser')
     
