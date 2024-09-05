@@ -15,3 +15,4 @@ class Crawler:
         links = [link.get('href') for link in soup.find_all('a', href=True)]
 
         return titles, links
+

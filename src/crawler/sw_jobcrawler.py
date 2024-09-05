@@ -5,6 +5,10 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from .models import Job
+
+def clear_existing_jobs():
+    Job.objects.all().delete()
 
 def JobCrawler():
     chrome_options = Options()
@@ -13,6 +17,8 @@ def JobCrawler():
 
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get("https://www.remoterocketship.com/?page=1&sort=DateAdded&jobTitle=Software+Engineer&seniority=entry-level&locations=United+States")  # Update with the target URL
+
+    clear_existing_jobs()
 
     job_links = []
     try:
@@ -28,3 +34,4 @@ def JobCrawler():
         driver.quit()
 
     return job_links
+
