@@ -1,21 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload PDF</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload PDF</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/upload_pdf.css' %}">
 </head>
 <body>
-    <h1>Upload PDF</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
+  <div class="upload-pdf-container">
+    <h1>Upload Your PDF Resume</h1>
+    <form method="post" enctype="multipart/form-data" action="{% url 'upload_pdf' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload Resume</button>
     </form>
-    {% if existing_pdf %}
-        <p>Uploaded PDF: <a href="{{ existing_pdf.pdf_file.url }}" target="_blank">View PDF</a></p>
+
+    {% if existing_pdf and existing_pdf.pdf_file %}
+      <div class="uploaded-pdf-info">
+        <p>Uploaded Resume:</p>
+        <a href="{{ existing_pdf.pdf_file.url }}" target="_blank">View Resume</a>
+      </div>
     {% else %}
-        <p>No PDF has been uploaded yet.</p>
+      <p>No resume has been uploaded yet. Please upload a PDF file to get started.</p>
     {% endif %}
+
+    <div class="navigation-links">
+      <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,0 +1,87 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Back Button - Top */
+.back-button-top {
+    position: absolute;
+    top: 50px;
+    left: 1070px;
+}
+
+.back-button-top button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.back-button-top button:hover {
+    background-color: #2980b9;
+}
+
+/* Back Button - Bottom */
+.back-button-bottom {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button-bottom button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back-button-bottom button:hover {
+    background-color: #2980b9;
+}
+
+/* Add to your existing CSS file */
+.button-group {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .button-group button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .button-group button:hover {
+    background-color: #45a049;
+  }

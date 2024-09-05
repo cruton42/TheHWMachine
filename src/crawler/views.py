@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .sw_jobcrawler import JobCrawler, extract_header_from_link, extract_description_from_link
-from .tw_crawler import twJobCrawler, twextract_header_from_link, twextract_description_from_link
-from django.http import HttpResponse
-from .models import Job, twJob, Resume
+from .models import Job, Resume
 from .forms import UploadPDFForm, UserPDF, RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -20,33 +18,6 @@ client = OpenAI(api_key=settings.OPENAI_API_KEY)
 def home(request):
     return render(request, 'home.html')
 
-
-def crawl_view(request):
-    job_links = twJobCrawler()
-    job_details = []
-
-    for link in job_links:
-        header = twextract_header_from_link(link)
-        description = twextract_description_from_link(link)
-
-        # Use get_or_create to avoid duplicates
-        job, created = twJob.objects.get_or_create(url=link, defaults={'header': header, 'description': description})
-
-        # Only append to job_details if the job was newly created or already exists
-        job_details.append({
-            'header': job.header,  # Use job.header from the database
-            'link': job.url,
-            'description': job.description
-        })
-
-        for job in job_details:
-            print(f"Job Header: {job['header']}, Job URL: {job['link']}")
-
-    # Pass the job details to the template for rendering
-    return render(request, 'jobcrawler.html', {'jobs': job_details})
-
-
-
 def jobcrawl_view(request):
     job_title = request.GET.get('job_title', 'Software Engineer')  # Default to 'Software Engineer' if no job_title provided
     job_title_encoded = requests.utils.quote(job_title)
@@ -57,13 +28,16 @@ def jobcrawl_view(request):
 
     job_links = JobCrawler(job_title)  # Fetch job links using your crawler
 
+    # Ensure job links are unique
+    unique_job_links = set(job_links)
+
     # Check if there are job results
-    if not job_links:
+    if not unique_job_links:
         return render(request, 'error.html', {'message': 'No job results found for the given title. Please try another job title.'})
 
     job_details = []
 
-    for link in job_links:
+    for link in unique_job_links:
         # Extract header and description from each job link
         header = extract_header_from_link(link)
         description = extract_description_from_link(link)
@@ -86,6 +60,7 @@ def jobcrawl_view(request):
     # Pass job details to the template for rendering
     return render(request, 'jobcrawler.html', {'jobs': job_details})
 
+
 def is_url_active(url):
     try:
         response = requests.get(url)
@@ -98,7 +73,7 @@ def error_view(request):
     return render(request, 'error.html')
 
 
-@login_required
+@login_required(login_url='/login/')
 def upload_pdf_view(request):
 
     # Check if a PDF is already uploaded for the user
@@ -152,7 +127,6 @@ def test_gpt_4o_mini():
 
 
 def custom_login_view(request):
-    test_gpt_4o_mini()
 
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -184,10 +158,7 @@ def custom_logout_view(request):
 def success_view(request):
     return render(request, 'success.html')
 
-
-# Set up OpenAI API key
-
-@login_required
+@login_required(login_url='/login/')
 def generate_cover_letter(request, job_id):
     try:
         # Fetch the job from the database
@@ -207,7 +178,7 @@ def generate_cover_letter(request, job_id):
             return render(request, 'cover_letter.html', {'cover_letter': cover_letter})
         else:
             # If no resume is found, redirect to the upload resume page
-            return redirect('upload_resume') 
+            return redirect('upload_pdf') 
 
     except Job.DoesNotExist:
         # If the job ID is not found
@@ -222,7 +193,7 @@ def generate_cover_letter(request, job_id):
 
 def generate_cover_letter_with_ai(job, resume_text):
     prompt = f"""
-    Write a professional cover letter for the following job:
+    (In 500 tokens or fewer)Write a professional cover letter for the following job:
     
     Job Title: {job.header}
     Job Description: {job.description}

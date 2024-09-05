@@ -1,0 +1,37 @@
+/* Upload Success Page Styles */
+.upload-success-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-success-container h1 {
+    color: #4CAF50; /* Green color for success */
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.upload-success-container p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.upload-success-container a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #4CAF50; /* Green color for buttons */
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.upload-success-container a:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

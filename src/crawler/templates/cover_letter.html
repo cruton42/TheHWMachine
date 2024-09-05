@@ -1,13 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cover Letter</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cover Letter</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/coverletter.css' %}">
 </head>
 <body>
+  <div class="back-button-top">
+    <button onclick="history.back()">Back</button>
+  </div>
+  <div class="container">
     <h1>Your Cover Letter</h1>
-    <div>
-        <p>{{ cover_letter }}</p>
+    <div class="cover-letter-content">
+      <p>{{ cover_letter|linebreaks }}</p>
     </div>
-    <a href="{% url 'home' %}">Back</a>
+    <div class="button-group">
+      <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+  </div>
+
+  <script>
+    function copyToClipboard() {
+      // Render the cover letter text into a JavaScript variable
+      const coverLetterText = `{{ cover_letter|escapejs|linebreaksbr }}`;
+
+      // Use the Clipboard API to write text to clipboard
+      navigator.clipboard.writeText(coverLetterText).then(function() {
+        // Notify the user
+        alert('Cover letter copied to clipboard!');
+      }).catch(function(err) {
+        // Handle errors
+        console.error('Failed to copy text:', err);
+        alert('Failed to copy text to clipboard.');
+      });
+    }
+  </script>
 </body>
 </html>

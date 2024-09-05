@@ -1,0 +1,90 @@
+/* styles/upload_pdf.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8; /* Light blue background */
+    color: #333; /* Dark text for contrast */
+    margin: 0;
+    padding: 0;
+}
+
+.upload-pdf-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #3498db; /* Primary blue color */
+    margin-bottom: 20px;
+}
+
+form {
+    margin: 20px 0;
+}
+
+form input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #3498db; /* Blue outline */
+    border-radius: 5px;
+    background-color: #ffffff; /* White background */
+    color: #3498db; /* Blue text color */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form input[type="file"]:hover {
+    border-color: #0033a0; /* Darker blue outline on hover */
+}
+
+button {
+    background-color: #3498db; /* Primary blue color */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #2980b9; /* Darker blue for hover effect */
+}
+
+.uploaded-pdf-info {
+    margin-top: 20px;
+}
+
+.uploaded-pdf-info p {
+    font-size: 18px;
+    color: #333;
+}
+
+.uploaded-pdf-info a {
+    color: #3498db; /* Blue color for links */
+    text-decoration: none;
+}
+
+.uploaded-pdf-info a:hover {
+    text-decoration: underline;
+}
+
+.navigation-links {
+    margin-top: 20px;
+}
+
+.navigation-links a {
+    color: #3498db; /* Blue color for navigation links */
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navigation-links a:hover {
+    text-decoration: underline;
+}

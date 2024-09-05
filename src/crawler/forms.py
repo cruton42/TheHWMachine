@@ -1,5 +1,4 @@
 # forms.py
-
 from django import forms
 from .models import UserPDF
 from django.contrib.auth.forms import UserCreationForm

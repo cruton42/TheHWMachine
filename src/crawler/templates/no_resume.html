@@ -1,13 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>No Resume</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-  <h1>No Resume Available</h1>
-  <p>You need to upload a resume to generate a cover letter. Please upload your resume and try again.</p>
-  <a href="{% url 'upload_pdf' %}">Upload Resume</a>
+  <div class="no-resume">
+    <h1>No Resume Available</h1>
+    <p>You need to upload a resume to generate a cover letter. Please upload your resume and try again.</p>
+    <a href="{% url 'upload_pdf' %}">Upload Resume</a>
+  </div>
 </body>
 </html>
