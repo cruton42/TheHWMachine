@@ -4,7 +4,7 @@ from pathlib import Path
 
 DEBUG = True  # Or False if you are deploying to production
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['thehwmachine.com']
 
 ROOT_URLCONF = 'crawler.urls'
 
