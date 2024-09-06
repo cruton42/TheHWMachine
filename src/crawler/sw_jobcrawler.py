@@ -8,22 +8,21 @@ from .models import Job
 import requests
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import TimeoutException
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 def JobCrawler(job_title):
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    service = Service('/opt/homebrew/bin/chromedriver')  # Update with the path to your chromedriver
+    
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    # Construct the URL with the user-defined job title
+        # Construct the URL with the user-defined job title
     job_title_encoded = job_title.replace(" ", "+")
     url = f"https://www.remoterocketship.com/?page=1&sort=DateAdded&locations=United+States&seniority=entry-level%2Cjunior&jobTitle={job_title_encoded}"
     
-    if is_url_active(url):
-        print("The URL is active.")
-    else:
-        print("The URL is not active.")
-
-    driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get(url)  # Use the dynamically constructed URL
 
     job_links = []

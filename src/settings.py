@@ -51,9 +51,9 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HWMDbase',
-        'USER': 'cocob',
-        'PASSWORD': 'Catsisdogs6!',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'example',
         'HOST': 'localhost',  # Or the IP address of your database server
         'PORT': '5432',       # Default port for PostgreSQL
     }
