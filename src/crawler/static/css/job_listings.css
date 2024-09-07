@@ -142,9 +142,9 @@ body {
 }
 
 .back-button-top {
-  position: absolute;
-  top: 20px;    /* Adjust this to control vertical position */
-  left: 380px;   /* Adjust this to control horizontal position */
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px; /* Adjust the spacing below the button */
 }
 
 .back-button-top button {

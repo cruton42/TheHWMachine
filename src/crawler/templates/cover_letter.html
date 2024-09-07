@@ -8,10 +8,10 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/coverletter.css' %}">
 </head>
 <body>
-  <div class="back-button-top">
-    <button onclick="history.back()">Back</button>
-  </div>
   <div class="container">
+    <div class="back-button-top">
+      <button onclick="history.back()">Back</button>
+    </div>
     <h1>Your Cover Letter</h1>
     <div class="cover-letter-content">
       <p>{{ cover_letter|linebreaks }}</p>
