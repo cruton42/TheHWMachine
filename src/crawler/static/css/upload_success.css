@@ -1,6 +1,8 @@
-/* Upload Success Page Styles */
+body, .upload-success-container {
+    font-family: Arial, sans-serif !important; /* Use !important if necessary */
+}
+
 .upload-success-container {
-    font-family: Arial, sans-serif;
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
