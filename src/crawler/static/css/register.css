@@ -33,10 +33,6 @@ form {
   flex-direction: column;
 }
 
-form p {
-  margin-bottom: 20px;
-}
-
 form label {
   display: block;
   margin-bottom: 8px;
@@ -47,10 +43,18 @@ form label {
 form input {
   padding: 12px;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 5px; /* Reduced space to create a compact look */
   border: 1px solid #ddd;
   border-radius: 5px;
   width: 100%;
+}
+
+.input-requirements {
+  margin-top: 5px; /* Space above */
+  margin-bottom: 15px; /* Space below */
+  font-size: 12px; /* Smaller font size for requirement text */
+  color: #666; /* Gray color for requirement text */
+  text-align: left; /* Align text to the left */
 }
 
 form button {

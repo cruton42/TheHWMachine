@@ -13,7 +13,11 @@
     <h1>Register</h1>
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }} <!-- Render the input field -->
+        <p class="input-requirements">{{ field.help_text }}</p> <!-- Requirement text below the input field -->
+      {% endfor %}
       <button type="submit">Register</button>
     </form>
   </div>

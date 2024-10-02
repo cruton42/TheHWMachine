@@ -1,4 +1,4 @@
-body, .upload-success-container {
+body, .upload-success-container, .upload-success-container h1, .upload-success-container p {
     font-family: Arial, sans-serif !important; /* Use !important if necessary */
 }
 
